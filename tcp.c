@@ -28,6 +28,12 @@ int main()
     int client_socket;
     client_socket = accept(server_socket, NULL, NULL);
 
+    char client_response[256];
+    recv(client_socket, &client_response, sizeof(client_response), 0);
+
+    printf("The client sent the data : %s\n", client_response);
+
+
     // send the message
     send(client_socket, server_message, sizeof(server_message), 0);
 
@@ -37,6 +43,7 @@ int main()
 
     return 0;
 }
+
 
 #include<stdio.h>
 #include<stdlib.h>
@@ -64,6 +71,9 @@ int main()
     {
         printf("There was an error in making a connection to the server\n\n");
     }
+
+    char hello[256] = "Hello from client";
+    send(network_socket, hello, sizeof(hello), 0);
     
     // receive data from the server
     char server_response[256];
